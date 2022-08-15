@@ -6,19 +6,15 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
+import br.com.trugdz.controlefinanceiro.model.Despesa;
 
-import br.com.trugdz.controlefinanceiro.model.Receita;
+public class DespesaForm {
 
-public class ReceitaForm {
-    @NotNull
     @NotEmpty
-    @Length(min = 5)
+    @NotNull
     private String descricao;
-
     @NotNull
     private BigDecimal valor;
-
     @NotNull
     private LocalDate data;
 
@@ -46,8 +42,7 @@ public class ReceitaForm {
         this.data = data;
     }
 
-    public Receita converter() {
-        return new Receita(descricao, valor, data);
+    public Despesa converter() {
+        return new Despesa(descricao, valor, data);
     }
-
 }

@@ -1,32 +1,24 @@
-package br.com.trugdz.controlefinanceiro.model;
+package br.com.trugdz.controlefinanceiro.controller.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import br.com.trugdz.controlefinanceiro.model.Despesa;
 
-@Entity
-public class Despesa {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DetalhesDaDespesaDto {
     private Long id;
     private String descricao;
     private BigDecimal valor;
     private LocalDate data;
     private LocalDateTime dataCadastro = LocalDateTime.now();
 
-    public Despesa(String descricao, BigDecimal valor, LocalDate data) {
-        this.descricao = descricao;
-        this.valor = valor;
-        this.data = data;
-    }
-
-    public Despesa() {
+    public DetalhesDaDespesaDto(Despesa despesa) {
+        this.id = despesa.getId();
+        this.descricao = despesa.getDescricao();
+        this.valor = despesa.getValor();
+        this.data = despesa.getData();
+        this.dataCadastro = despesa.getDataCadastro();
     }
 
     public Long getId() {
