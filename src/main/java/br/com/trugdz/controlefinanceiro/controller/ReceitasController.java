@@ -4,8 +4,11 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,9 +44,8 @@ public class ReceitasController {
     }
 
     @PostMapping // Cadastrar nova receita
-    public ResponseEntity<ReceitaDto> cadastrar(@RequestBody ReceitaForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<ReceitaDto> cadastrar(@Valid @RequestBody ReceitaForm form, UriComponentsBuilder uriBuilder) {
         Receita receita = form.converter();
-
         receitaRepository.save(receita);
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(receita.getId()).toUri();
@@ -62,12 +64,24 @@ public class ReceitasController {
     }
 
     @PutMapping("/{id}") // Atualizar receita pelo ID
-    public ResponseEntity<ReceitaDto> atualizar(@PathVariable Long id, @RequestBody AtualizacaoReceitaForm form) {
+    public ResponseEntity<ReceitaDto> atualizar(@PathVariable Long id,
+            @RequestBody @Valid AtualizacaoReceitaForm form) {
         Optional<Receita> optional = receitaRepository.findById(id);
         if (optional.isPresent()) {
             Receita receita = form.atualizar(id, receitaRepository);
             return ResponseEntity.ok(new ReceitaDto(receita));
         }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}") // Deletar receita pelo ID
+    public ResponseEntity<?> remover(@PathVariable Long id) {
+        Optional<Receita> optional = receitaRepository.findById(id);
+        if (optional.isPresent()) {
+            receitaRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        }
+
         return ResponseEntity.notFound().build();
     }
 }
