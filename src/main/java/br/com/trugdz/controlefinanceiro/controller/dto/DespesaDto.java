@@ -6,8 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.http.ResponseEntity;
-
+import br.com.trugdz.controlefinanceiro.model.Categoria;
 import br.com.trugdz.controlefinanceiro.model.Despesa;
 
 public class DespesaDto {
@@ -17,6 +16,15 @@ public class DespesaDto {
     private BigDecimal valor;
     private LocalDate data;
     private LocalDateTime dataCadastro = LocalDateTime.now();
+    private Categoria categoria;
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
     public DespesaDto(Despesa despesa) {
         this.id = despesa.getId();
@@ -24,6 +32,7 @@ public class DespesaDto {
         this.valor = despesa.getValor();
         this.data = despesa.getData();
         this.dataCadastro = despesa.getDataCadastro();
+        this.categoria = despesa.getCategoria();
     }
 
     public Long getId() {

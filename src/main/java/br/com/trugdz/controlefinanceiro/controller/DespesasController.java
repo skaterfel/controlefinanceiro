@@ -33,9 +33,15 @@ public class DespesasController {
     private DespesaRepository despesaRepository;
 
     @GetMapping
-    public List<DespesaDto> listar() {
-        List<Despesa> despesas = despesaRepository.findAll();
-        return DespesaDto.converter(despesas);
+    public List<DespesaDto> listar(String descricao) {
+        if (descricao == null || descricao.isEmpty()) {
+            List<Despesa> despesas = despesaRepository.findAll();
+            return DespesaDto.converter(despesas);
+        } else {
+            List<Despesa> despesas = despesaRepository.findByDescricaoContaining(descricao);
+            return DespesaDto.converter(despesas);
+        }
+
     }
 
     @PostMapping

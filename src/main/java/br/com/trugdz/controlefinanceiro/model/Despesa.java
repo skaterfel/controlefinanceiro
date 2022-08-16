@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,11 +21,22 @@ public class Despesa {
     private BigDecimal valor;
     private LocalDate data;
     private LocalDateTime dataCadastro = LocalDateTime.now();
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria = Categoria.OUTROS;
 
-    public Despesa(String descricao, BigDecimal valor, LocalDate data) {
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Despesa(String descricao, BigDecimal valor, LocalDate data, Categoria categoria) {
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
+        this.categoria = categoria;
     }
 
     public Despesa() {

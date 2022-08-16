@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import br.com.trugdz.controlefinanceiro.model.Categoria;
 import br.com.trugdz.controlefinanceiro.model.Despesa;
 
 public class DespesaForm {
@@ -17,6 +18,8 @@ public class DespesaForm {
     private BigDecimal valor;
     @NotNull
     private LocalDate data;
+
+    private Categoria categoria = Categoria.OUTROS;
 
     public String getDescricao() {
         return descricao;
@@ -43,6 +46,14 @@ public class DespesaForm {
     }
 
     public Despesa converter() {
-        return new Despesa(descricao, valor, data);
+        return new Despesa(descricao, valor, data, categoria);
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
