@@ -46,7 +46,6 @@ public class ReceitasController {
     @PostMapping // Cadastrar nova receita
     public ResponseEntity<ReceitaDto> cadastrar(@Valid @RequestBody ReceitaForm form, UriComponentsBuilder uriBuilder) {
         Receita receita = form.converter();
-
         receitaRepository.save(receita);
 
         URI uri = uriBuilder.path("/receitas/{id}").buildAndExpand(receita.getId()).toUri();
